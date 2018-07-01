@@ -1,0 +1,8 @@
+1- the UART driver can transmit and receive on the same channel in the cyclic mode only.
+
+2- an appropriate delay time must exist between the consecutive calls of UART_TX_Init and UART_TX and even betweeen UART_TX and another UART_TX to prevent overwriting the data buffers.
+
+3-it's impossible to expect the output of using the same channel for transmitting and receiving in the interrupt driven mode, as the receiving ISR changes the interrupt level parameters which causes buggy writings in the transmission. It may work at certain circumstances but it's not reliable and we shouldn't use the same UART channel in the interrupts driven mode.
+
+
+Note: the UART may need some more rigorous tests, I have tested all fifo levels, but another tester point of view may prove useful.
